@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b52c761a4cc96a4bbd6468c31cb9b0a, type: 3}
-  m_Name: pervii
+  m_Name: "\u0418\u043D\u043A\u043E\u0433\u043D\u0438\u0442\u043E"
   m_EditorClassIdentifier: 
-  name: Krisa
-  description: Janeblan
-  artwork: {fileID: 21300000, guid: aecad2e1f284d2849934f1d0b1424cf7, type: 3}
-  manaCost: 3
+  name: 123
+  description: 345
+  artwork: {fileID: 21300000, guid: e06f7ab2cab9ed84a9a6c6cebe9b75ef, type: 3}
+  manaCost: 1
   attack: 2
-  health: 4
+  health: 2
