@@ -7,12 +7,14 @@ public class CardScript : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndD
 {
     Camera MainCamera;
     Vector3 offset;
-    public Transform DefaultParent;
+    public Transform DefaultParent, DefaultTempCardParent;
+    GameObject TempCardGo;
     void Awake ()
 
         
     {
         MainCamera = Camera.allCameras[0];
+        TempCardGo = GameObject.Find("TempCardGo");
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -21,14 +23,23 @@ public class CardScript : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndD
         Vector3 newPos = MainCamera.ScreenToWorldPoint(eventData.position);
         newPos.z = 0;
         transform.position = newPos + offset;
+
+        if (TempCardGo.transform.parent != DefaultTempCardParent)
+        {
+            TempCardGo.transform.SetParent(DefaultTempCardParent);
+        }     
+
+        CheckPosition(); 
     }
 
     public void OnBeginDrag(PointerEventData eventData)
 
     {
         offset = transform.position - MainCamera.ScreenToWorldPoint(eventData.position);
-        DefaultParent = transform.parent;
-        transform.SetParent(DefaultParent.parent);
+        DefaultParent = DefaultTempCardParent = transform.parent;
+        TempCardGo.transform.SetParent(DefaultParent);
+        TempCardGo.transform.SetSiblingIndex(transform.GetSiblingIndex());
+        transform.SetParent(DefaultParent.parent); 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
@@ -37,6 +48,30 @@ public class CardScript : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndD
     {
         transform.SetParent(DefaultParent);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+        transform.SetSiblingIndex(TempCardGo.transform.GetSiblingIndex());
+        TempCardGo.transform.SetParent(GameObject.Find("Canvas").transform);
+        TempCardGo.transform.localPosition = new Vector3(1800, 0);
     }
-    
+    void CheckPosition()
+    {
+        int newIndex = DefaultTempCardParent.childCount;
+
+        for (int i = 0; i < DefaultTempCardParent.childCount; i++)
+        {
+            if (transform.position.x < DefaultTempCardParent.GetChild(i).position.x)
+            {
+                newIndex = i;
+
+                if (TempCardGo.transform.GetSiblingIndex() < newIndex)
+
+                    newIndex--;
+
+                break;
+            }
+        }
+        TempCardGo.transform.SetSiblingIndex(newIndex);
+    }
+
+
 }
