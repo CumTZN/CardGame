@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new card" , menuName = "card")]
-public class Card : ScriptableObject
+public class Card1 : ScriptableObject
 {
     public new string name;
     public string description;
@@ -11,11 +11,13 @@ public class Card : ScriptableObject
     public Sprite artwork;
 
     public int manaCost;
-    public int attack;
+    public static int attack;
     public int health;
 
     public void Print()
     {
         Debug.Log(name + ":" + description + "The card cost" + manaCost);
     }
+
 }
+

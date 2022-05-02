@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardScript : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndDragHandler
+public class CardScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     Camera MainCamera;
     Vector3 offset;
     public Transform DefaultParent, DefaultTempCardParent;
     GameObject TempCardGo;
-    void Awake ()
+    void Awake()
 
-        
+
     {
         MainCamera = Camera.allCameras[0];
         TempCardGo = GameObject.Find("TempCardGo");
@@ -27,9 +27,9 @@ public class CardScript : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndD
         if (TempCardGo.transform.parent != DefaultTempCardParent)
         {
             TempCardGo.transform.SetParent(DefaultTempCardParent);
-        }     
+        }
 
-        CheckPosition(); 
+        CheckPosition();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -39,7 +39,7 @@ public class CardScript : MonoBehaviour , IBeginDragHandler, IDragHandler, IEndD
         DefaultParent = DefaultTempCardParent = transform.parent;
         TempCardGo.transform.SetParent(DefaultParent);
         TempCardGo.transform.SetSiblingIndex(transform.GetSiblingIndex());
-        transform.SetParent(DefaultParent.parent); 
+        transform.SetParent(DefaultParent.parent);
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
